@@ -3,14 +3,12 @@ import { Client } from "astro:db";
 import { db } from "astro:db";
 
 if(Astro.request.method === "POST"){
-//Crear cliente
 const formData = await Astro.request.formData();
 const name = formData.get("name");
 const subname = formData.get("subname");
 const cuit = formData.get("cuit");
 const location = formData.get("location");
 const phone = formData.get("phone");
-console.log({name, subname, cuit, location, phone});
 
 if(typeof name === "string" &&
 typeof subname === "string" &&
@@ -21,9 +19,9 @@ typeof phone === "number"
 {
 await db.insert(Client).values({name,subname,cuit,location,phone});
 }
-
-
+}
 ---
+
 <section>
     <div class="bg-white p-8 rounded-lg w-2/4 mx-auto">
         <h2 class="text-xl font-bold mb-4">Agregar cliente</h2>
