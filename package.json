@@ -10,8 +10,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.5.9",
     "@astrojs/check": "^0.5.10",
+    "@astrojs/db": "^0.9.4",
+    "@astrojs/vercel": "^7.4.0",
+    "astro": "^4.5.9",
+    "flowbite": "^2.3.0",
+    "i": "^0.3.7",
     "typescript": "^5.4.3"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
   }
 }

@@ -1,0 +1,35 @@
+---
+import { db, Client } from 'astro:db';
+const clients = await db.select().from(Client);
+---
+<section>
+    <div class="bg-white p-8 rounded-lg w-2/4 mx-auto">
+        <h2 class="text-xl font-bold mb-4">Agregar cheque</h2>
+        <form id="form-agregar-cheque" onsubmit="agregarCheque(event)">
+            <div class="mb-4">
+                <label for="fecha" class="block font-bold mb-2">Fecha:</label>
+                <input type="text" id="fecha" name="fecha" class="px-4 py-2 border rounded-lg w-full">
+                <label for="num-cheque" class="block font-bold mb-2">Nº de cheque:</label>
+                <input type="text" id="num-cheque" name="num-cheque" class="px-4 py-2 border rounded-lg w-full">
+                <label for="banco" class="block font-bold mb-2">Cliente:</label>
+                <select id="cliente" name="cliente" class="px-4 py-2 border rounded-lg w-full">
+                    {clients.map(client => (
+                        <option value={client.id}>{client.name}</option>
+                    ))}
+                </select>
+                <label for="banco" class="block font-bold mb-2">Banco:</label>
+                <input type="number" id="banco" name="banco" class="px-4 py-2 border rounded-lg w-full">
+                <label for="importe" class="block font-bold mb-2">Importe:</label>
+                <input type="text" id="importe" name="importe" class="px-4 py-2 border rounded-lg w-full">
+                <label for="fecha-cheque" class="block font-bold mb-2">Fecha del cheque:</label>
+                <input type="text" id="fecha-cheque" name="fecha-cheque" class="px-4 py-2 border rounded-lg w-full">
+                <label for="dias" class="block font-bold mb-2">Días:</label>
+                <input type="text" id="dias" name="dias" class="px-4 py-2 border rounded-lg w-full">
+                <label for="tasa" class="block font-bold mb-2">Tasa:</label>
+                <input type="text" id="tasa" name="tasa" class="px-4 py-2 border rounded-lg w-full">
+            </div>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg mt-4">Guardar</button>
+            <a href="/" class="px-4 py-2 bg-red-600 text-white rounded-lg mt-4">Cancelar</a>
+        </form>
+    </div>
+</section>

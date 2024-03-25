@@ -1,0 +1,39 @@
+---
+import { db, Client } from 'astro:db';
+const clients = await db.select().from(Client);
+---
+<section>
+    <!-- Contenido Client -->
+    <div id="clientes" class="contenido-seccion">
+        <div class="w-3/4 p-4">
+            <h1 class="text-2xl font-bold mb-4">Clientes</h1>
+            <div class="flex justify-between mb-4">              
+                <a href="/Create-client/create" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Agregar Cliente</a>
+                <input type="text" placeholder="Buscar..." class="px-4 py-2 border rounded-lg w-1/2">
+            </div>
+
+            <table class="w-full mb-4 border border-gray-200 rounded-lg">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="px-4 py-2">Nombre</th>
+                        <th class="px-4 py-2">Apellido</th>
+                        <th class="px-4 py-2">Cuit</th>
+                        <th class="px-4 py-2">Localidad</th>
+                        <th class="px-4 py-2">Telefono</th>
+                    </tr>
+                </thead>
+                {clients.map(({ name, subname }) => (
+                <tbody>
+                    <tr>
+                        <td class="px-4 py-2 text-center">{name}</td>
+                        <td class="px-4 py-2 text-center">{subname}</td>
+                    </tr>
+                </tbody>
+                ))}
+            </table>
+            <div class="mt-4">
+                <!-- Aquí irá la paginación -->
+            </div>
+        </div>
+    </div>
+</section>

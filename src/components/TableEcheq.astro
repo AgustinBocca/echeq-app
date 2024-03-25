@@ -1,0 +1,68 @@
+---
+import { db, Client, Echeq } from 'astro:db';
+const cheques = await db.select().from(Echeq);
+const clients = await db.select().from(Client);
+---
+
+<section>
+    <!-- Contenido principal -->
+    <div id="cheques" class="contenido-seccion">
+        <div class="w-3/4 p-4">
+            <div class="flex justify-between mb-4">
+                <a href="/Create-echeq" class="px-4 py-2 bg-blue-500 text-white rounded-lg"> 
+                Agregar cheque </a>
+                <input type="text" placeholder="Buscar..." class="px-4 py-2 border rounded-lg w-1/2">
+            </div>
+            <div>
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr class="bg-gray-200">
+                            <th class="px-4 py-2 text-center">Fecha</th>
+                            <th class="px-4 py-2 text-center">Nº de cheque</th>
+                            <th class="px-4 py-2 text-center">Cliente</th>
+                            <th class="px-4 py-2 text-center">Banco</th>
+                            <th class="px-4 py-2 text-center">Importe</th>
+                            <th class="px-4 py-2 text-center">Fecha del cheque</th>
+                            <th class="px-4 py-2 text-center">Días</th>
+                            <th class="px-4 py-2 text-center">Tasa</th>
+                            <th class="px-4 py-2 text-center">Intereses</th>
+                            <th class="px-4 py-2 text-center">Imp a entregar</th>
+                            <th class="px-4 py-2 text-center">Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-cheques-body">
+                        {cheques.map(({ datetime, number, client_id, bank, importe, days, dateEcheq, tasa, interest, importClient }) => (
+                        <tr>
+                            <td class="px-4 py-2 text-center">{datetime.toLocaleDateString('es-AR')}</td>
+                            <td class="px-4 py-2 text-center">{number}</td>
+                            <td class="px-4 py-2 text-center">{clients.find(client => client.id === client_id)?.name + ' ' + clients.find(client => client.id === client_id)?.subname  ?? 'Cliente Desconocido'}</td>
+                            <td class="px-4 py-2 text-center">{bank}</td>
+                            <td class="px-4 py-2 text-center">{importe}</td>
+                            <td class="px-4 py-2 text-center">{dateEcheq.toLocaleDateString('es-AR')}</td>
+                            <td class="px-4 py-2 text-center">{days}</td>
+                            <td class="px-4 py-2 text-center">{tasa}</td>
+                            <td class="px-4 py-2 text-center">{interest}</td>
+                            <td class="px-4 py-2 text-center">{importClient}</td>
+                            <td class="px-4 py-2">
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            </td>
+                        </tr>
+                        ))}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td class="px-4 py-2 text-center">Total importe: $<span id="total-importe">0.00</span></td>
+                            <td colspan="4"></td>
+                            <td class="px-4 py-2 text-center">Total a entregar: $<span id="total-dinero">0.00</span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="mt-4">
+                <!-- Aquí irá la paginación -->
+            </div>
+        </div>
+    </div>
+</section>
+</body>
